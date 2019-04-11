@@ -87,6 +87,13 @@ def addWithZip(fst: List[Int], snd: List[Int]): List[Int] =
     case (Cons(h1, t1), Cons(h2, t2)) => Cons(h1 + h2, addWithZip(t1, t2))
   }
 
+def zipWith[A, B, C](fst: List[A], snd: List[B])(f: (A, B) => C): List[C] =
+  (fst, snd) match {
+    case (fst, Nil) => Nil
+    case (Nil, snd) => Nil
+    case (Cons(h1, t1), Cons(h2, t2)) => Cons(f(h1, h2), zipWith(t1, t2)(f))
+  }
+
 def apply[A](as: A*): List[A] =  
   if (as.isEmpty) Nil 
   else Cons (as.head, apply(as.tail: _*)) 
