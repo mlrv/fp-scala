@@ -80,6 +80,13 @@ def filterViaFlatMap[A](xs: List[A])(p: A => Boolean): List[A] =
     case false => Nil 
   }) 
 
+def addWithZip(fst: List[Int], snd: List[Int]): List[Int] =
+  (fst, snd) match {
+    case (fst, Nil) => Nil
+    case (Nil, snd) => Nil
+    case (Cons(h1, t1), Cons(h2, t2)) => Cons(h1 + h2, addWithZip(t1, t2))
+  }
+
 def apply[A](as: A*): List[A] =  
   if (as.isEmpty) Nil 
   else Cons (as.head, apply(as.tail: _*)) 
